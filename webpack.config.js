@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // Entry y Output de la App
@@ -21,24 +22,37 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.html$/,
-        /* en use si solo ponemos un loader podemos poner el objeto directo, si necesitamos más de un loader
-        pones un arraya y dentro la cantidad de objetos necesitarios*/
+        /* en 'use' si solo ponemos un loader podemos poner el objeto directo, si necesitamos más de un loader
+        pones un array y dentro la cantidad de objetos necesitarios*/
         use: {
           loader: 'html-loader',
-        }
-      }
-    ]
+        },
+      },
+      {
+        test: /\.(s*)css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+    ],
   },
   // Configuramos los plugins
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: './index.html',
-    })
-  ]
-}
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'assets/[name].css',
+    }),
+  ],
+};
