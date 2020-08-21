@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Así importamos una imagen con webpack
+import logo from '../assets/static/logo-platzi-video-BW2.png';
+import userIcon from '../assets/static/user-icon.png';
 import '../assets/styles/components/Header.scss';
 
 const profile = 'Perfil';
@@ -11,10 +14,10 @@ const altLogo = 'Platzi video';
 const Header = () => (
 
   <header className='header'>
-    <img className='header__img' src='../assets/logoplatzi.png' alt={altLogo} />
+    <img className='header__img' src={logo} alt={altLogo} />
     <div className='header__menu'>
       <div className='header__menu--profile'>
-        <img src='../assets/user.svg' alt={altUser} />
+        <img src={userIcon} alt={altUser} />
         <p>{profile}</p>
       </div>
       <ul>
