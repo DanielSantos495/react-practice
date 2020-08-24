@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Header from '../components/Header';
 import Search from '../components/Search';
@@ -9,47 +9,52 @@ import Footer from '../components/Footer';
 
 import '../assets/styles/App.scss';
 
-const App = () => (
-  <div className='App'>
-    <Header />
-    <Search />
+const App = () => {
+  // Maneja el estado, videos (this.state) y setVideos (this.setSatet()) pero lo nombramos como queremos
+  const [videos, setVideos] = useState({ mylist: [], trends: [], originals: [] });
+  const API_URL = 'http://localhost:3000/initalState';
 
-    <Categories title='Mi lista'>
-      <Carousel>
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-      </Carousel>
-    </Categories>
+  useEffect(() => {
+    fetch(API_URL)
+      .then((response) => response.json())
+      .then((data) => setVideos(data));
+  }, []);
 
-    <Categories title='Tendencia'>
-      <Carousel>
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-      </Carousel>
-    </Categories>
+  console.log(videos.mylist);
+  return (
+    <div className='App'>
+      <Header />
+      <Search />
 
-    <Categories title='Originales de PlatziVideo'>
-      <Carousel>
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-        <CarouseItem />
-      </Carousel>
-    </Categories>
+      {videos.mylist.length > 0 && (
+        <Categories title='Mi lista'>
+          <Carousel>
+            <CarouseItem />
+          </Carousel>
+        </Categories>
+      )}
 
-    <Footer />
-  </div>
-);
+      <Categories title='Tendencia'>
+        <Carousel>
+          {videos.trends.map((item) =>
+
+            <CarouseItem key={item.id} {...item}/>
+          )}
+        </Carousel>
+      </Categories>
+
+      <Categories title='Originales de PlatziVideo'>
+        <Carousel>
+          {videos.originals.map((item) =>
+            <CarouseItem key={item.id} {...item} />
+          )}
+        </Carousel>
+      </Categories>
+
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
 

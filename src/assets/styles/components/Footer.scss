@@ -1,17 +1,17 @@
 .footer {
   align-items: center;
-  background-color: #9477FD;
+  background-color: var(--secundary-color);
   display: flex;
   height: 100px;
   width: 100%;
 }
 .footer a {
-  color: #fff;
+  color: var(--white-color);
   cursor: pointer;
   font-size: 14px;
   padding-left: 30px;
   text-decoration: none;
 }
 .footer a:hover {
-  color: #d8d8d8;
+  color: var(--white-color);
 }

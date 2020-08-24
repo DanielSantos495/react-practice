@@ -25,16 +25,16 @@
 
 /* Estilos barra (thumb) de scroll */
 .carousel::-webkit-scrollbar-thumb {/* la rayita del scroll que sube y baja "track es el fondo del scroll"*/ 
-  background: #ab88ff;
+  background: var(--scroll-color);
   border-radius: 25px;
 
 }
 
 .carousel::-webkit-scrollbar-thumb:active {
-  background-color: #fff;
+  background-color: var(--white-color);
 }
 
 .carousel::-webkit-scrollbar-thumb:hover {
-  background: #fff;
+  background: var(--white-color);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
 }
