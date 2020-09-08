@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Header from '../components/Header';
 import Search from '../components/Search';
@@ -6,27 +6,23 @@ import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouseItem from '../components/CarouselItem';
 import Footer from '../components/Footer';
+import useInitialState from '../hooks/useInitialState';
 
 import '../assets/styles/App.scss';
 
+const API_URL = 'http://localhost:3000/initalState';
+
 const App = () => {
-  // Maneja el estado, videos (this.state) y setVideos (this.setSatet()) pero lo nombramos como queremos
-  const [videos, setVideos] = useState({ mylist: [], trends: [], originals: [] });
-  const API_URL = 'http://localhost:3000/initalState';
 
-  useEffect(() => {
-    fetch(API_URL)
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
+  const initialState = useInitialState(API_URL);
 
-  console.log(videos.mylist);
-  return (
+  console.log(initialState);
+  return initialState.length === 0 ? <h1>Loading...</h1> : (
     <div className='App'>
       <Header />
       <Search />
 
-      {videos.mylist.length > 0 && (
+      {initialState.mylist.length > 0 && (
         <Categories title='Mi lista'>
           <Carousel>
             <CarouseItem />
@@ -36,7 +32,7 @@ const App = () => {
 
       <Categories title='Tendencia'>
         <Carousel>
-          {videos.trends.map((item) =>
+          {initialState.trends.map((item) =>
 
             <CarouseItem key={item.id} {...item}/>
           )}
@@ -45,7 +41,7 @@ const App = () => {
 
       <Categories title='Originales de PlatziVideo'>
         <Carousel>
-          {videos.originals.map((item) =>
+          {initialState.originals.map((item) =>
             <CarouseItem key={item.id} {...item} />
           )}
         </Carousel>
